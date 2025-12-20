@@ -77,6 +77,7 @@ async function main() {
       },
     ],
   });
+
   console.log('Seeded authors');
 
   // ======================
@@ -84,55 +85,54 @@ async function main() {
   // ======================
   await prisma.book.createMany({
     data: [
-      // Classic literature
       {
         id: 'book-secret-garden',
         title: 'The Secret Garden',
-        isbn: '9780143039433',
+        isbn: '9780143131849',
         publishedDate: new Date('1911-01-01'),
         description: 'A classic novel about growth, healing, and friendship.',
       },
       {
         id: 'book-alice',
         title: "Alice's Adventures in Wonderland",
-        isbn: '9780141439761',
+        isbn: '9780141321073',
         publishedDate: new Date('1865-11-26'),
         description: 'A whimsical fantasy exploring imagination and logic.',
       },
 
-      // Agatha Christie (selected best)
+      // Agatha Christie
       {
         id: 'book-styles',
         title: 'The Mysterious Affair at Styles',
-        isbn: '9780062073556',
+        isbn: '9780007527496',
         publishedDate: new Date('1920-10-01'),
         description: 'Poirot’s first case.',
       },
       {
         id: 'book-roger-ackroyd',
         title: 'The Murder of Roger Ackroyd',
-        isbn: '9780062073563',
+        isbn: '9780007136834',
         publishedDate: new Date('1926-06-01'),
         description: 'A groundbreaking detective novel.',
       },
       {
         id: 'book-abc',
         title: 'The ABC Murders',
-        isbn: '9780062073587',
+        isbn: '9781579126247',
         publishedDate: new Date('1936-01-06'),
         description: 'A serial killer mystery.',
       },
       {
         id: 'book-cards',
         title: 'Cards on the Table',
-        isbn: '9780062073617',
+        isbn: '9780062073624',
         publishedDate: new Date('1936-11-02'),
         description: 'A psychological murder mystery.',
       },
       {
         id: 'book-clouds',
         title: 'Death in the Clouds',
-        isbn: '9780062073600',
+        isbn: '9780008129538',
         publishedDate: new Date('1935-03-01'),
         description: 'A murder aboard an airplane.',
       },
@@ -153,14 +153,14 @@ async function main() {
       {
         id: 'book-mcginty',
         title: "Mrs. McGinty's Dead",
-        isbn: '9780062073624',
+        isbn: '9780008129569',
         publishedDate: new Date('1952-02-11'),
         description: 'A case involving a seemingly obvious murder.',
       },
       {
         id: 'book-dumb-witness',
         title: 'Dumb Witness',
-        isbn: '9780062073631',
+        isbn: '9780008129576',
         publishedDate: new Date('1937-07-05'),
         description: 'A mystery involving a silent witness.',
       },
@@ -263,6 +263,7 @@ async function main() {
       },
     ],
   });
+
   console.log('Seeded books');
 
   // ======================
@@ -273,7 +274,6 @@ async function main() {
       { authorId: 'author-burnett', bookId: 'book-secret-garden' },
       { authorId: 'author-carroll', bookId: 'book-alice' },
 
-      // Agatha Christie
       { authorId: 'author-christie', bookId: 'book-styles' },
       { authorId: 'author-christie', bookId: 'book-roger-ackroyd' },
       { authorId: 'author-christie', bookId: 'book-abc' },
@@ -284,7 +284,6 @@ async function main() {
       { authorId: 'author-christie', bookId: 'book-mcginty' },
       { authorId: 'author-christie', bookId: 'book-dumb-witness' },
 
-      // Rowling
       { authorId: 'author-rowling', bookId: 'book-hp1' },
       { authorId: 'author-rowling', bookId: 'book-hp3' },
       { authorId: 'author-rowling', bookId: 'book-hp4' },
@@ -292,20 +291,18 @@ async function main() {
       { authorId: 'author-rowling', bookId: 'book-hp6' },
       { authorId: 'author-rowling', bookId: 'book-hp7' },
 
-      // Others
       { authorId: 'author-gaiman', bookId: 'book-coraline' },
       { authorId: 'author-twain', bookId: 'book-double-barrel' },
       { authorId: 'author-hume', bookId: 'book-hansom' },
       { authorId: 'author-hume', bookId: 'book-silent-house' },
 
-      // Bible
       { authorId: 'author-kjv', bookId: 'book-pentateuch' },
       { authorId: 'author-kjv', bookId: 'book-psalms' },
       { authorId: 'author-kjv', bookId: 'book-nt' },
     ],
   });
-  console.log('Linked authors and books');
 
+  console.log('Linked authors and books');
   console.log('Database seed completed');
 }
 
