@@ -61,17 +61,35 @@ export class BooksService {
     // Ensure book exists
     await this.findOne(id);
 
-    return this.prisma.book.update({
+    const { authorIds, publishedDate, ...bookData } = updateBookDto;
+
+    // Update book fields
+    await this.prisma.book.update({
       where: { id },
       data: {
-        title: updateBookDto.title,
-        isbn: updateBookDto.isbn,
-        description: updateBookDto.description,
-        publishedDate: updateBookDto.publishedDate
-          ? new Date(updateBookDto.publishedDate)
-          : undefined,
+        ...bookData,
+        publishedDate: publishedDate ? new Date(publishedDate) : undefined,
       },
     });
+
+    // Handle author relationship updates if authorIds provided
+    if (authorIds && Array.isArray(authorIds)) {
+      // Delete all existing author relationships
+      await this.prisma.bookAuthor.deleteMany({
+        where: { bookId: id },
+      });
+
+      // Create new relationships
+      await this.prisma.bookAuthor.createMany({
+        data: authorIds.map((authorId) => ({
+          bookId: id,
+          authorId,
+        })),
+      });
+    }
+
+    // Return updated book with authors
+    return this.findOne(id);
   }
 
   // Delete book
