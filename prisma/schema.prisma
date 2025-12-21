@@ -14,35 +14,48 @@ datasource db {
   provider = "postgresql"
 }
 
+model Book {
+  id          String   @id @default(uuid())
+  title       String
+  description String?
+  publishedAt DateTime?
+  isbn        String?  @unique
+  isAvailable Boolean  @default(true)
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  authors     AuthorBook[]
+
+  @@index([title])
+}
+
 model Author {
   id        String   @id @default(uuid())
   name      String
   bio       String?
   birthDate DateTime?
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  books     BookAuthor[]
+  books     AuthorBook[]
+
+  @@index([name])
 }
 
-model Book {
-  id            String   @id @default(uuid())
-  title         String
-  isbn          String   @unique
-  publishedDate DateTime
-  description       String?
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+model AuthorBook {
+  id        String   @id @default(uuid())
 
-  authors       BookAuthor[]
-}
-
-model BookAuthor {
   bookId   String
   authorId String
-  book     Book   @relation(fields: [bookId], references: [id], onDelete: Cascade)
-  author   Author @relation(fields: [authorId], references: [id], onDelete: Cascade)
 
-  @@id([bookId, authorId])
+  createdAt DateTime @default(now())
 
-} 
+  book   Book   @relation(fields: [bookId], references: [id], onDelete: Cascade)
+  author Author @relation(fields: [authorId], references: [id], onDelete: Restrict)
+
+  @@unique([bookId, authorId])
+  @@index([bookId])
+  @@index([authorId])
+}
