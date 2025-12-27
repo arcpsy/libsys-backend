@@ -277,6 +277,8 @@ constructor(private readonly prisma: PrismaService) {}
 
 This allows all CRUD operations to interact with the database through Prisma.
 
+This is also where to start creating the Services and Controllers.
+
 ---
 
 ### Final Note
